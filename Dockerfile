@@ -1,4 +1,4 @@
-FROM dustynv/ros:humble-desktop-l4t-r35.4.1
+FROM masakifujiwara1/box3_humble:1119-tsukuba-run
 
 WORKDIR /home
 ENV HOME /home
@@ -18,10 +18,8 @@ RUN mkdir -p ~/ros2_ws/src && cd ~/ros2_ws && colcon build
 RUN cd ~/ros2_ws/src && . /home/git_clone.sh
 RUN . /opt/ros/humble/install/setup.sh && cd ~/ros2_ws && colcon build --symlink-install
 RUN source /opt/ros/humble/install/setup.bash && source ~/ros2_ws/install/local_setup.bash
+RUN apt-get install bash-completion
+RUN source /etc/bash_completion
 
 COPY config/.bashrc ~/.bashrc
 COPY config/.vimrc ~/.vimrc
-
-COPY /home/ornebox3-jetson/.ssh/config /root/.ssh/config　
-
-ENTRYPOINT ["/bin/bash"]
